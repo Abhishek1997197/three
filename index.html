@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieKing</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        iframe { width: 100vw; height: 100vh; border: none; }
+        .fullscreen-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; }
+        .fullscreen-container iframe { width: 100%; height: 100%; }
+        .exit-btn { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <iframe id="webview" src="https://www.movixo.info/"></iframe>
+    <div id="fullscreen-container" class="fullscreen-container">
+        <iframe id="fullscreen-iframe"></iframe>
+        <div class="exit-btn" onclick="exitFullscreen()">Exit Fullscreen</div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const iframe = document.getElementById("webview");
+            const fullContainer = document.getElementById("fullscreen-container");
+            const fullIframe = document.getElementById("fullscreen-iframe");
+
+            window.open = function(url) {
+                iframe.src = url;
+            };
+
+            window.onbeforeunload = function() {
+                return "Do you really want to leave?";
+            };
+        });
+
+        function enterFullscreen(url) {
+            document.getElementById("fullscreen-container").style.display = "block";
+            document.getElementById("fullscreen-iframe").src = url;
+        }
+        
+        function exitFullscreen() {
+            document.getElementById("fullscreen-container").style.display = "none";
+            document.getElementById("fullscreen-iframe").src = "";
+        }
+    </script>
+</body>
+</html>
